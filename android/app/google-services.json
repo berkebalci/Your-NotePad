@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "336293293612",
+    "project_id": "my-first-firebaseproject-a5a2c",
+    "storage_bucket": "my-first-firebaseproject-a5a2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336293293612:android:10bf128182b6428e29ab89",
+        "android_client_info": {
+          "package_name": "com.example.time_tracker_app_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "336293293612-7r7s9vgu8fsp2vjptjk6grrshlk8dia1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKV1JcgEo5QW37kTGvT0hyqWEPtgFuGLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "336293293612-7r7s9vgu8fsp2vjptjk6grrshlk8dia1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
