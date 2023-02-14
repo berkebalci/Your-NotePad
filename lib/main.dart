@@ -1,18 +1,19 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:time_tracker_app_firebase/test.dart';
+import 'package:time_tracker_app_firebase/screens/HomeScreen.dart';
+import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
 
 //Providers for Firebase operations:
+/*
 final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
 final authStateChangesProvider = StreamProvider(
   (ref) {
     return ref.watch(firebaseAuthProvider).authStateChanges();
   },
-);
+);*/
 
 Future main() async {
   WidgetsFlutterBinding
@@ -96,10 +97,27 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             ElevatedButton(
-                child: Text("Go to Test Screen"),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ));
+                },
+                child: Text("Go to sign_in Screen")),
+            ElevatedButton(
+                child: Text("Go to Login Screen"),
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: ((context) => TestScreen())),
+                    MaterialPageRoute(builder: ((context) {
+                      return StreamBuilder(
+                          stream: FirebaseAuth.instance.authStateChanges(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return HomeScreen();
+                            } else {
+                              return LoginScreen();
+                            }
+                          });
+                    })),
                   );
                 }),
           ],
