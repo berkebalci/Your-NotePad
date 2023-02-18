@@ -70,8 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 25,
             ),
             RichText(
+              
               text: TextSpan(
-                style: TextStyle(color: Color(255))
+                style: TextStyle(color: Colors.blueAccent,fontSize: 20)
                 ,
                 children: [
                   TextSpan(text: "Don't have an Account?"),
@@ -79,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     recognizer: TapGestureRecognizer()..onTap = widget.OnclickedSignUp 
                     //SignUp'a bastığımız zaman AuthenticationWidget'daki isLogin'e bakılıyor  ,
                     ,style: TextStyle(decoration: TextDecoration.underline)
-                    ,text: "Click here to create an account")
+                    ,text: "SignUp")
                 ]))
           ]),
         ),

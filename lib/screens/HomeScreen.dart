@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ElevatedButton(
                   onPressed: () async {
                     await Authentication.sign_out(); //User Logout işlemi.
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).pop(MaterialPageRoute(
                       builder: (context) => MyHomePage(),
                     ));
                   },
