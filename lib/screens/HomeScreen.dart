@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:time_tracker_app_firebase/main.dart';
+import 'package:time_tracker_app_firebase/services/authentication.dart';
 
 class HomeScreen extends StatefulWidget {
+  
   const HomeScreen({super.key});
 
   @override
@@ -14,8 +16,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    print("$user");
+    final User? user =
+        FirebaseAuth.instance.currentUser; //currentUser bir getter metodu
+
+    late var useremail;
+    if (user?.email != null) {
+      useremail = user!.email!;
+    }
+
+    //TODO: üst satırdan dolayı çıkan hatayı düzelt
+    //print("$user");
     return Scaffold(
         appBar: AppBar(
             title: Row(
@@ -28,10 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("${user!.email} has logged in"),
+              Text("User has logged in $useremail"),
               ElevatedButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut(); //User Logout işlemi.
+                  onPressed: () async {
+                    await Authentication.sign_out(); //User Logout işlemi.
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyHomePage(),
                     ));

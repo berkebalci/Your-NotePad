@@ -1,10 +1,10 @@
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_tracker_app_firebase/screens/HomeScreen.dart';
 import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
+import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
 
 //Providers for Firebase operations:
 /*
@@ -63,12 +63,18 @@ class MyHomePage extends StatelessWidget {
           //içinde olan kodlar yeniden çalışıyor.
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              print("StreamBuilder if");
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasData) {
+              print(snapshot.data);
               return HomeScreen();
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text("Something went wrong"),
+              );
             } else {
-              print("StreamBuilder else");
-              return LoginScreen();
+              print("Auth class'i döndürülecek");
+              return Auth();
             }
           }),
       // This trailing comma makes auto-formatting nicer for build methods.

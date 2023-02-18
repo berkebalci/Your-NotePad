@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,10 +11,30 @@ class Authentication {
   String password;
   Authentication({required this.email, required this.password});
 
-  Future sign_in() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email, 
-      password: password);
-      
+  Future sign_in() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email.trim(), password: password.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
+  static Future sign_out() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
+  Future sign_up() async {
+    try {
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      throw FirebaseAuthException(code: "FirebaseAuthException");
+    }
   }
 }

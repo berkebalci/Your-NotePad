@@ -1,4 +1,5 @@
 //This class is testing for Firebase operations
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_tracker_app_firebase/services/authentication.dart';
@@ -11,7 +12,8 @@ final passwcontrollerProvider = StateProvider(
 );*/
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final VoidCallback OnclickedSignUp;
+  const LoginScreen({super.key, required this.OnclickedSignUp});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -32,14 +34,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   labelText: "UserName",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    ),
+
                 ),
                 controller: emailController),
             SizedBox(
               height: 30,
             ),
             TextField(
+              textAlign: TextAlign.center,
               decoration: InputDecoration(
                 labelText: "Password",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))
               ),
               controller: passwController,
             ),
@@ -59,9 +67,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
             SizedBox(
-              height: 40,
+              height: 25,
             ),
-            
+            RichText(
+              text: TextSpan(
+                style: TextStyle(color: Color(255))
+                ,
+                children: [
+                  TextSpan(text: "Don't have an Account?"),
+                  TextSpan(
+                    recognizer: TapGestureRecognizer()..onTap = widget.OnclickedSignUp 
+                    //SignUp'a bastığımız zaman AuthenticationWidget'daki isLogin'e bakılıyor  ,
+                    ,style: TextStyle(decoration: TextDecoration.underline)
+                    ,text: "Click here to create an account")
+                ]))
           ]),
         ),
       ),
