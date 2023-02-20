@@ -6,7 +6,6 @@ import 'package:time_tracker_app_firebase/main.dart';
 import 'package:time_tracker_app_firebase/services/authentication.dart';
 
 class HomeScreen extends StatefulWidget {
-  
   const HomeScreen({super.key});
 
   @override

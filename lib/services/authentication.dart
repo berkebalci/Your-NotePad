@@ -28,13 +28,16 @@ class Authentication {
     }
   }
 
-  Future sign_up() async {
+  Future<dynamic> sign_up() async {
     try {
-      FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      throw FirebaseAuthException(code: "FirebaseAuthException");
+      print("sign_up metoduna girildi");
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      }
+      on FirebaseAuthException catch (e) {
+      print("$e s ve j işte tüm mesele bu");
+      return e.code;
+
+      //throw FirebaseAuthException(code: "FirebaseAuthException");
     }
   }
 }

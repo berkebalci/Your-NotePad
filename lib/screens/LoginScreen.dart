@@ -1,4 +1,5 @@
 //This class is testing for Firebase operations
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,10 +23,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwController = TextEditingController();
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login Screen"),)
+      appBar: AppBar(
+        centerTitle: true, 
+        title:Text("Login Screen"),)
       ,body: Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),
