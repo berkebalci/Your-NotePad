@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:time_tracker_app_firebase/services/authentication.dart';
@@ -63,12 +64,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return AlertDialog(
                           content:
                               Text("email-already-in-use or invalid email"),
-                          title: Text("SignUp error")
-                         ,actions: [
+                          title: Text("SignUp error"),
+                          actions: [
                             ElevatedButton(
-                                
                                 onPressed: (() {
-                                  Navigator.pop(context); //AlertDialog mesajını kapatacak
+                                  Navigator.of(context)
+                                      .pop(); //AlertDialog mesajını kapatacak
                                 }),
                                 child: Text("Close this message"))
                           ],
@@ -82,7 +83,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
               },
               icon: Icon(Icons.forward_sharp),
               label: Text("Sign Up"),
-            )
+            ),
+            RichText(
+                text: TextSpan(
+                    style: TextStyle(color: Colors.blueAccent, fontSize: 20),
+                    children: [
+                  TextSpan(
+                    text: "Already have an account?",
+                  ),
+                  TextSpan(
+                      text: "Login Here",
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = widget.OnClickedSignUp,
+                      style: TextStyle(decoration: TextDecoration.underline))
+                ]))
           ],
         ),
       )),
