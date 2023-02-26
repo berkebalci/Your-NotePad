@@ -1,17 +1,19 @@
-import 'dart:html';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-final messangerkey = GlobalKey<ScaffoldMessengerState>();
+
 
 //TODO: ScaffoldMessanger widgetini öğren
 class Utils {
+  static final messangerkey = GlobalKey<ScaffoldMessengerState>();
   static showSnackBar(String? text) {
     if (text == null) {
       return;
     } else {
-      var snackbar = SnackBar(content: Text(text));
+      var snackbar = SnackBar(content:  Text(text));
+      messangerkey.currentState!
+        ..removeCurrentSnackBar()
+        ..showSnackBar(snackbar);
     }
   }
 

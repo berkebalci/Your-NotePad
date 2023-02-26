@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/screens/HomeScreen.dart';
 import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
 import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      scaffoldMessengerKey: Utils.messangerkey
+      ,title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

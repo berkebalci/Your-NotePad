@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/services/PaswwordReset.dart';
 
 class ForgotPswScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _ForgotPswScreenState extends State<ForgotPswScreen> {
             ElevatedButton.icon(
                 onPressed: () async {
                   var object = PasswReset(email: emailcontroller.text);
-                  await  object.reset_password();
+                  await object.reset_password();
                   try {
                     await object.reset_password();
                   } on FirebaseAuthException catch (e) {
@@ -51,8 +52,10 @@ class _ForgotPswScreenState extends State<ForgotPswScreen> {
                           //TODO: showDialoglara Animation paketi ile animasyon ekle
                           context: context,
                           builder: (context) {
-                            return AlertDialog(
-                              content: Text("invalid-email please try again"),
+                            return Utils.showAlertDialog(
+                            context,
+                            "invalid-email please try again",
+                            title: "Error"
                             );
                           },
                         );
@@ -61,10 +64,10 @@ class _ForgotPswScreenState extends State<ForgotPswScreen> {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return AlertDialog(
-                              content: Text("Email couldn't be found"),
-                            );
-                          },
+                            return Utils.showAlertDialog(context
+                              ,"Email couldn't be found",
+                              title: "Error");
+                              },
                         );
                     }
                   }
