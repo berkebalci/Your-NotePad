@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:time_tracker_app_firebase/main.dart';
 import 'package:time_tracker_app_firebase/services/authentication.dart';
+import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
       useremail = user!.email!;
     }
 
-    //TODO: üst satırdan dolayı çıkan hatayı düzelt
     //print("$user");
     return Scaffold(
         appBar: AppBar(
@@ -41,10 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ElevatedButton(
                   onPressed: () async {
                     await Authentication.sign_out(); //User Logout işlemi.
-                    Navigator.of(context).pop(MaterialPageRoute(
-                      builder: (context) => MyHomePage(),
-                    ));
-                  },
+                    },
                   child: Text("Sign Out")),
             ],
           ),
