@@ -16,6 +16,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _emailtextController = TextEditingController();
   final _passwtextController = TextEditingController();
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,12 +60,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             ElevatedButton.icon(
               onPressed: () async {
-                var object = Authentication(
+                  var object = Authentication(
                     email: _emailtextController.text,
                     password: _passwtextController.text);
-
+                
                 try {
                   var result = await object.sign_up();
+                  
                   if (result == "email-already-in-use" ||
                       result == "invalid-email") {
                     showDialog(
@@ -76,6 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                     );
                   }
+                  
                   Utils.showSnackBar("Sign Up has completed");
                 } on FirebaseAuthException catch (e) {
                   print(e);

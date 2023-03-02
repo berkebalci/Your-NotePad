@@ -6,6 +6,7 @@ import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/screens/HomeScreen.dart';
 import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
 import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
+import 'package:time_tracker_app_firebase/widgets/ConfirmEmail.dart';
 
 //Providers for Firebase operations:
 /*
@@ -69,7 +70,7 @@ class MyHomePage extends StatelessWidget {
               return CircularProgressIndicator();
             } else if (snapshot.hasData) {
               print(snapshot.data);
-              return HomeScreen();
+              return EmailVerWidget();
             } else if (snapshot.hasError) {
               return Center(
                 child: Text("Something went wrong"),

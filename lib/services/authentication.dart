@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
 import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
 
@@ -31,13 +32,22 @@ class Authentication {
   Future<dynamic> sign_up() async {
     try {
       print("sign_up metoduna girildi");
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-      }
-      on FirebaseAuthException catch (e) {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
       print("$e s ve j işte tüm mesele bu");
       return e.code;
 
       //throw FirebaseAuthException(code: "FirebaseAuthException");
+    }
+  }
+
+  Future confirmEmail() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser!;
+      await user.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      Utils.showSnackBar(e.message);
     }
   }
 }

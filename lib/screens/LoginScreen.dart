@@ -14,7 +14,7 @@ final passwcontrollerProvider = StateProvider(
 );*/
 
 class LoginScreen extends StatefulWidget {
-  final VoidCallback OnclickedSignUp;
+  final VoidCallback OnclickedSignUp; //Hem checklogin hem de checkemailverified callbackleri gelcek
   const LoginScreen({super.key, required this.OnclickedSignUp});
 
   @override

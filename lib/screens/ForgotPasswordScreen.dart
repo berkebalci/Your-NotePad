@@ -42,9 +42,11 @@ class _ForgotPswScreenState extends State<ForgotPswScreen> {
             ElevatedButton.icon(
                 onPressed: () async {
                   var object = PasswReset(email: emailcontroller.text);
-                  await object.reset_password();
                   try {
                     await object.reset_password();
+                    Utils.showSnackBar(
+                        "Password Link has been send to the given email");
+                    Navigator.of(context).pop();
                   } on FirebaseAuthException catch (e) {
                     switch (e.code) {
                       case "invalid-email":
@@ -53,10 +55,8 @@ class _ForgotPswScreenState extends State<ForgotPswScreen> {
                           context: context,
                           builder: (context) {
                             return Utils.showAlertDialog(
-                            context,
-                            "invalid-email please try again",
-                            title: "Error"
-                            );
+                                context, "invalid-email please try again",
+                                title: "Error");
                           },
                         );
                         break;
@@ -64,10 +64,10 @@ class _ForgotPswScreenState extends State<ForgotPswScreen> {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return Utils.showAlertDialog(context
-                              ,"Email couldn't be found",
-                              title: "Error");
-                              },
+                            return Utils.showAlertDialog(
+                                context, "Email couldn't be found",
+                                title: "Error");
+                          },
                         );
                     }
                   }
