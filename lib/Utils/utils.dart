@@ -16,15 +16,18 @@ class Utils {
       messangerkey.currentState!
         ..removeCurrentSnackBar()
         ..showSnackBar(snackbar);
-    } 
-    
-    else {
+    } else {
       var snackbar = SnackBar(
-        backgroundColor: Color(300),
-        content: Text(text),
+        padding: EdgeInsets.all(8),
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Text(text),
+            ),
+          ],
+        ),
         action: SnackBarAction(
-
-          textColor: Color(400),
           label: actiontext,
           onPressed: onClickedSnackBar,
         ),
@@ -36,25 +39,23 @@ class Utils {
   }
 
   static showAlertDialog(BuildContext context, String? content,
-      {String title = "Alert"}) {
+      {String title = "Alert", VoidCallback onClickedOk = defaultOnclickedOk}) {
     if (content == null) {
       return;
     }
 
-    return AlertDialog(
-      content: Text(content),
-      title: Text(title),
-      actions: [
-        ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("Ok"))
-      ],
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(content),
+          title: Text(title),
+          actions: [ElevatedButton(onPressed: onClickedOk, child: Text("Ok"))],
+        );
+      },
     );
   }
 
-  static defaultOnclickedSnackBarFun() {
-    print("**");
-  }
+  static defaultOnclickedSnackBarFun() {}
+  static defaultOnclickedOk() {}
 }

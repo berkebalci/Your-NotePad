@@ -16,7 +16,6 @@ final authStateChangesProvider = StreamProvider(
     return ref.watch(firebaseAuthProvider).authStateChanges();
   },
 );*/
-
 Future main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); //Bu satır ile firebase server'i bağlantısı kuruluyor
