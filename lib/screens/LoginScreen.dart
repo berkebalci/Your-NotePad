@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_tracker_app_firebase/screens/ForgotPasswordScreen.dart';
 import 'package:time_tracker_app_firebase/services/authentication.dart';
 /*
 final usernamecontrollerProvider = StateProvider((ref) {
@@ -13,7 +14,7 @@ final passwcontrollerProvider = StateProvider(
 );*/
 
 class LoginScreen extends StatefulWidget {
-  final VoidCallback OnclickedSignUp;
+  final VoidCallback OnclickedSignUp; //Hem checklogin hem de checkemailverified callbackleri gelcek
   const LoginScreen({super.key, required this.OnclickedSignUp});
 
   @override
@@ -23,14 +24,15 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwController = TextEditingController();
-   
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true, 
-        title:Text("Login Screen"),)
-      ,body: Center(
+        centerTitle: true,
+        title: Text("Login Screen"),
+      ),
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -40,8 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: "UserName",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    ),
-
+                  ),
                 ),
                 controller: emailController),
             SizedBox(
@@ -50,9 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               textAlign: TextAlign.center,
               decoration: InputDecoration(
-                labelText: "Password",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))
-              ),
+                  labelText: "Password",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10))),
               controller: passwController,
             ),
             Row(
@@ -60,11 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 ElevatedButton(
                   child: Text("Sign In"),
-                  onPressed: () {
+                  onPressed: () async {
                     var Authobject = Authentication(
                         email: emailController.text,
                         password: passwController.text);
-                    Authobject.sign_in();
+                    await Authobject.sign_in();
                     print("Signing in is succesfful");
                   },
                 ),
@@ -73,19 +74,46 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 25,
             ),
-            RichText(
-              
-              text: TextSpan(
-                style: TextStyle(color: Colors.blueAccent,fontSize: 20)
-                ,
-                children: [
-                  TextSpan(text: "Don't have an Account?"),
-                  TextSpan(
-                    recognizer: TapGestureRecognizer()..onTap = widget.OnclickedSignUp 
-                    //SignUp'a bastığımız zaman AuthenticationWidget'daki isLogin'e bakılıyor  ,
-                    ,style: TextStyle(decoration: TextDecoration.underline)
-                    ,text: "SignUp")
-                ]))
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              RichText(
+                  textAlign: TextAlign.left,
+                  text: TextSpan(
+                      style:
+                          TextStyle(color: Colors.blueAccent, fontSize: 20),
+                      children: [
+                        TextSpan(text: "Don't have an Account?"),
+                        TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.OnclickedSignUp
+                            //SignUp'a bastığımız zaman AuthenticationWidget'daki isLogin'e bakılıyor  ,
+                            ,
+                            style: TextStyle(
+                                decoration: TextDecoration.underline),
+                            text: "SignUp")
+                      ])),
+              SizedBox(
+                height: 20,
+              ),
+              RichText(
+                  text: TextSpan(
+                      style: TextStyle(color: Colors.blueAccent, fontSize: 20),
+                      children: [
+                    TextSpan(
+                      text: "Forgot your password?",
+                    ),
+                    TextSpan(
+                        text: "Reset your pasword",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ForgotPswScreen(),
+                            ));
+                          })
+                  ]))
+            ])
           ]),
         ),
       ),

@@ -11,10 +11,12 @@ class Auth extends StatefulWidget {
   State<Auth> createState() => _AuthState();
 }
 
+
 class _AuthState extends State<Auth> {
   var isLogin = true;
   @override
   Widget build(BuildContext context) {
+    print("build calistirildi");
     return isLogin
         ? LoginScreen(
             OnclickedSignUp: check_login,

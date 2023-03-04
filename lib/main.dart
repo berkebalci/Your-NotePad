@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/screens/HomeScreen.dart';
 import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
 import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
+import 'package:time_tracker_app_firebase/widgets/ConfirmEmail.dart';
 
 //Providers for Firebase operations:
 /*
@@ -14,7 +16,6 @@ final authStateChangesProvider = StreamProvider(
     return ref.watch(firebaseAuthProvider).authStateChanges();
   },
 );*/
-
 Future main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); //Bu satır ile firebase server'i bağlantısı kuruluyor
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      scaffoldMessengerKey: Utils.messangerkey
+      ,title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -67,7 +69,7 @@ class MyHomePage extends StatelessWidget {
               return CircularProgressIndicator();
             } else if (snapshot.hasData) {
               print(snapshot.data);
-              return HomeScreen();
+              return EmailVerWidget();
             } else if (snapshot.hasError) {
               return Center(
                 child: Text("Something went wrong"),

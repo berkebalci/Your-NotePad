@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/services/authentication.dart';
 import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
 
@@ -15,10 +16,19 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _emailtextController = TextEditingController();
   final _passwtextController = TextEditingController();
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text("SignUp Screen")),
+      appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              widget.OnClickedSignUp(); 
+            },
+            icon: Icon(Icons.arrow_back_sharp),
+          ),
+          centerTitle: true,
+          title: Text("SignUp Screen")),
       body: Center(
           child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -50,33 +60,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             ElevatedButton.icon(
               onPressed: () async {
-                var object = Authentication(
+                  var object = Authentication(
                     email: _emailtextController.text,
                     password: _passwtextController.text);
-
+                
                 try {
                   var result = await object.sign_up();
+                  
                   if (result == "email-already-in-use" ||
                       result == "invalid-email") {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          content:
-                              Text("email-already-in-use or invalid email"),
-                          title: Text("SignUp error"),
-                          actions: [
-                            ElevatedButton(
-                                onPressed: (() {
-                                  Navigator.of(context)
-                                      .pop(); //AlertDialog mesajını kapatacak
-                                }),
-                                child: Text("Close this message"))
-                          ],
-                        );
+                        return Utils.showAlertDialog(
+                            context, "email-already-in-use or invalid email",
+                            title: "Error");
                       },
                     );
                   }
+                  
+                  Utils.showSnackBar("Sign Up has completed");
                 } on FirebaseAuthException catch (e) {
                   print(e);
                 }
