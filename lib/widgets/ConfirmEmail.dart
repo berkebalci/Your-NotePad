@@ -16,27 +16,37 @@ class EmailVerWidget extends StatefulWidget {
 class _EmailVerWidgetState extends State<EmailVerWidget> {
   var isEmailVerified = false;
   User? currentuser = FirebaseAuth.instance.currentUser;
-  late Timer _timer;
-  
+  late Timer timer;
+
   @override //TODO: Bu widget'daki setstate or markneeds build sorununu çöz!
   void initState() {
-    super.initState();
+    print("initState'e girdi");
+    super.initState(); //TODO: Bu metoda girmiyor böyle bir sıkıntı var.
     isEmailVerified = currentuser!.emailVerified;
     if (currentuser != null) {
-      _timer = Timer.periodic(Duration(seconds: 3), (timer) async {
-        if (currentuser!.emailVerified == true) {
-          timer.cancel();
-          }
-        await FirebaseAuth.instance.currentUser!.reload();
-        isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-      });
+       print("current is not null");
+       timer = Timer.periodic(Duration(seconds: 3),(timer) =>checkemailStatus() ,);
+    } 
+    else {
+      print("Current user is null");
     }
   }
 
   @override
   void dispose() {
+    timer.cancel();
     super.dispose();
-    _timer.cancel();
+}
+  Future checkemailStatus() async{
+     if (currentuser!.emailVerified == true) {
+          print("Sj");
+          timer.cancel();
+        }
+        await FirebaseAuth.instance.currentUser!.reload(); //Reload ederek Firebasedeki son değişiklikleri alıyoruz.
+        setState(() {
+          isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;   
+        });
+       
   }
 
   @override
