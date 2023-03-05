@@ -10,6 +10,7 @@ import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
 class Authentication {
   String email;
   String password;
+  String deletepassword = "";
   Authentication({required this.email, required this.password});
 
   Future sign_in() async {
@@ -48,6 +49,21 @@ class Authentication {
       await user.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
+    }
+  }
+
+  Future deleteuser() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.reauthenticateWithCredential(
+            EmailAuthProvider.credential(email: email, password: password));
+        await user.delete();
+      } else {
+        throw FirebaseAuthException(code: "invalid-credential");
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e);
     }
   }
 }

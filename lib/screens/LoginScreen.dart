@@ -35,7 +35,9 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start
+            ,mainAxisAlignment: MainAxisAlignment.center, children: [
             TextField(
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
