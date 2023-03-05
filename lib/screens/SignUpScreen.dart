@@ -6,6 +6,8 @@ import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/services/authentication.dart';
 import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
 
+late var userpasw;
+
 class SignUpScreen extends StatefulWidget {
   final VoidCallback OnClickedSignUp;
   SignUpScreen({super.key, required this.OnClickedSignUp});
@@ -14,16 +16,32 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _emailtextController = TextEditingController();
-  final _passwtextController = TextEditingController();
- 
+  var isPasswordvisible = false;
+  TextEditingController? emailtextController;
+  TextEditingController? passwtextController;
+  
+  @override
+  void initState() {
+    super.initState();
+    emailtextController = TextEditingController();
+    passwtextController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailtextController!.clear();
+    passwtextController!.clear();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              widget.OnClickedSignUp(); 
+              widget.OnClickedSignUp();
             },
             icon: Icon(Icons.arrow_back_sharp),
           ),
@@ -37,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           children: [
             TextField(
               textAlign: TextAlign.center,
-              controller: _emailtextController,
+              controller: emailtextController,
               decoration: InputDecoration(
                   labelText: "Write your Email",
                   border: OutlineInputBorder(
@@ -48,8 +66,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             TextField(
               textAlign: TextAlign.center,
-              controller: _passwtextController,
+              controller: passwtextController,
+              obscureText: !isPasswordvisible,
               decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(isPasswordvisible
+                        ? Icons.visibility_off_sharp
+                        : Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        isPasswordvisible = !isPasswordvisible;
+                      });
+                    },
+                  ),
                   labelText: "Write your Password",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)),
@@ -60,13 +89,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             ElevatedButton.icon(
               onPressed: () async {
-                  var object = Authentication(
-                    email: _emailtextController.text,
-                    password: _passwtextController.text);
-                
+                var object = Authentication(
+                    email: emailtextController!.text,
+                    password: passwtextController!.text);
+
                 try {
                   var result = await object.sign_up();
-                  
+
                   if (result == "email-already-in-use" ||
                       result == "invalid-email") {
                     showDialog(
@@ -76,10 +105,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             context, "email-already-in-use or invalid email",
                             title: "Error");
                       },
-                    );
+                    ); //TODO: Account deleting işlemini yap.Signup widgetinden confşrmscreen widgetine usrpsw fieldi aktarılması lazım
                   }
-                  
-                  Utils.showSnackBar("Sign Up has completed");
+
+                  Utils.showSnackBar(
+                      "Please confirm your email via the button above");
+                  userpasw = passwtextController!.text;
                 } on FirebaseAuthException catch (e) {
                   print(e);
                 }
@@ -104,5 +135,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       )),
     );
+  }
+
+  get userpw {
+    return userpasw;
   }
 }

@@ -1,13 +1,16 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:time_tracker_app_firebase/Utils/utils.dart';
+import 'package:time_tracker_app_firebase/screens/SignUpScreen.dart';
 import 'package:time_tracker_app_firebase/services/authentication.dart';
 import 'package:time_tracker_app_firebase/widgets/ConfirmEmail.dart';
 
 class EmailConfirmScreen extends StatefulWidget {
   final VoidCallback onEmailVerified;
+  final VoidCallback onPswControllerchanged = () => "";
   EmailConfirmScreen({super.key, required this.onEmailVerified});
 
   @override
@@ -26,10 +29,15 @@ class _EmailConfirmScreenState extends State<EmailConfirmScreen> {
           print("Sj");
           Utils.showAlertDialog(
             context,
-            "You are about to cancel siging up.Your informations will be deleted",
+            "You are about to cancel signing up.Your informations will be deleted",
             title: "Are you sure?",
             onClickedOk: () async {
-              await FirebaseAuth.instance.currentUser!.delete();
+              var email = currentuser!.email;
+              var usrpsw = userpasw;
+              var object = Authentication(email: email!, password: usrpsw);
+              object.deleteuser();
+              Utils.showSnackBar("The informations you've given has been deleted");
+              Navigator.of(context).pop();
             },
           );
         },
@@ -51,7 +59,7 @@ class _EmailConfirmScreenState extends State<EmailConfirmScreen> {
               }
             },
           ),
-          /*ElevatedButton.icon(
+          ElevatedButton.icon(
             onPressed: (() async {
               print("$currentuser");
               await currentuser!.reload();
@@ -60,7 +68,6 @@ class _EmailConfirmScreenState extends State<EmailConfirmScreen> {
                 setState(() {
                   widget.onEmailVerified();
                 });
-                //TODO: SignUp has completed yazısını düzelt
               } else {
                 Utils.showSnackBar(
                   "Email is not confirmed yet",
@@ -77,7 +84,7 @@ class _EmailConfirmScreenState extends State<EmailConfirmScreen> {
             }),
             label: Text("Click here if you confirmed your email"),
             icon: Icon(Icons.check),
-          )*/
+          )
         ],
       )),
     );
