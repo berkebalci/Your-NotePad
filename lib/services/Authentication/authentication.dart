@@ -1,11 +1,7 @@
-import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
-import 'package:time_tracker_app_firebase/screens/LoginScreen.dart';
+
 
 class Authentication {
   String email;

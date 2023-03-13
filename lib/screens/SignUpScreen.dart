@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:time_tracker_app_firebase/Utils/utils.dart';
-import 'package:time_tracker_app_firebase/services/authentication.dart';
+import 'package:time_tracker_app_firebase/services/Authentication/authentication.dart';
 import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
 
 late var userpasw;
