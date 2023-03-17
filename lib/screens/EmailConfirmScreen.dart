@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/screens/SignUpScreen.dart';
-import 'package:time_tracker_app_firebase/services/authentication.dart';
+import 'package:time_tracker_app_firebase/services/Authentication/authentication.dart';
 import 'package:time_tracker_app_firebase/widgets/ConfirmEmail.dart';
 
 class EmailConfirmScreen extends StatefulWidget {
@@ -68,6 +68,7 @@ class _EmailConfirmScreenState extends State<EmailConfirmScreen> {
                 setState(() {
                   widget.onEmailVerified();
                 });
+                
               } else {
                 Utils.showSnackBar(
                   "Email is not confirmed yet",

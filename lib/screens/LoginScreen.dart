@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_tracker_app_firebase/screens/ForgotPasswordScreen.dart';
-import 'package:time_tracker_app_firebase/services/authentication.dart';
+import 'package:time_tracker_app_firebase/services/Authentication/authentication.dart';
 /*
 final usernamecontrollerProvider = StateProvider((ref) {
   return "";
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         email: emailController.text,
                         password: passwController.text);
                     await Authobject.sign_in();
-                    print("Signing in is succesfful");
+                    
                   },
                 ),
               ],

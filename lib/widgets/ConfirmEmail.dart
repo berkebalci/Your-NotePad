@@ -18,10 +18,10 @@ class _EmailVerWidgetState extends State<EmailVerWidget> {
   User? currentuser = FirebaseAuth.instance.currentUser;
   late Timer timer;
 
-  @override //TODO: Bu widget'daki setstate or markneeds build sorununu çöz!
+  @override 
   void initState() {
     print("initState'e girdi");
-    super.initState(); //TODO: Bu metoda girmiyor böyle bir sıkıntı var.
+    super.initState(); 
     isEmailVerified = currentuser!.emailVerified;
     if (currentuser != null) {
        print("current is not null");
