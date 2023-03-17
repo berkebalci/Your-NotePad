@@ -105,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             context, "email-already-in-use or invalid email",
                             title: "Error");
                       },
-                    ); //TODO: Account deleting işlemini yap.Signup widgetinden confşrmscreen widgetine usrpsw fieldi aktarılması lazım
+                    ); 
                   }
 
                   Utils.showSnackBar(

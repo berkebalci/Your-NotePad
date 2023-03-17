@@ -68,6 +68,7 @@ class _EmailConfirmScreenState extends State<EmailConfirmScreen> {
                 setState(() {
                   widget.onEmailVerified();
                 });
+                
               } else {
                 Utils.showSnackBar(
                   "Email is not confirmed yet",
