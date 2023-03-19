@@ -29,8 +29,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void dispose() {
-    emailtextController!.clear();
-    passwtextController!.clear();
+    emailtextController!.dispose();
+    passwtextController!.dispose();
 
     super.dispose();
   }

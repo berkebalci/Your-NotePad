@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:time_tracker_app_firebase/main.dart';
 import 'package:time_tracker_app_firebase/screens/AddingNoteScreen.dart';
 import 'package:time_tracker_app_firebase/services/Authentication/authentication.dart';
+import 'package:time_tracker_app_firebase/services/FireStoreOperations/CrudOperations.dart';
 import 'package:time_tracker_app_firebase/services/FireStoreOperations/FireStoreOperations.dart';
 import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
 
@@ -18,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late User? user;
   late var isCollectionExists = false;
+  var crudop = FireStoreCrudOperations();
   @override
   void initState() {
     //currentUser bir getter metodu
@@ -57,48 +59,63 @@ class _HomeScreenState extends State<HomeScreen> {
           Text("HomeScreen"),
         ],
       )),
-      body: isCollectionExists
-          ? ListView.separated( //TODO: Buraya FireStore'dan read özelliği gelmesi lazım
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              padding: EdgeInsets.all(15),
-              itemCount: 15,
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black54),
-                      borderRadius: BorderRadius.circular(15)),
-                  height: MediaQuery.of(context).size.height / 10,
-                  width: MediaQuery.of(context).size.width / 10,
-                  child: ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Not", style: TextStyle(fontSize: 30)),
-                      ],
+      body: StreamBuilder<dynamic>(
+          stream: crudop.readNotes(user!.email!),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final notes = snapshot.data;
+              
+              return ListView.separated(
+                //TODO: Buraya FireStore'dan read özelliği gelmesi lazım
+                shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                padding: EdgeInsets.all(15),
+                itemCount:4,          
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black54),
+                        borderRadius: BorderRadius.circular(15)),
+                    height: MediaQuery.of(context).size.height / 10,
+                    width: MediaQuery.of(context).size.width / 10,
+                    child: ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("${notes.title} , ${notes.content}", style: TextStyle(fontSize: 30)),
+                        ],
+                      ),
+                      trailing: Icon(Icons.forward),
+                      onTap: () async {
+                        //TODO: FireStore Read ve ayrıca bir container gerekiyor
+                      },
                     ),
-                    trailing: Icon(Icons.forward),
-                    onTap: () async {
-                      //TODO: FireStore Read ve ayrıca bir container gerekiyor
-                    },
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: 20,
-                );
-              },
-            )
-          : Center(
-              child: Text("There is nothing here"),
-            ),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 20,
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              print("Something went wrong");
+            } else {
+              return Center(
+                child: Text("To add note press +"),
+              );
+            }
+            return CircularProgressIndicator();
+          }),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) {
-                return AddingNoteScreen(isCollectionExists: sendCollectionExists,);
+                return AddingNoteScreen(
+                  iscollectionexists: isCollectionExists,
+                  onAddedFirstNote: checkCollectionexists,
+                );
               },
             ));
           },
@@ -109,7 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  get sendCollectionExists{
-    return  isCollectionExists;
+  void checkCollectionexists() {
+    setState(() {
+      isCollectionExists = !isCollectionExists;
+    });
   }
 }

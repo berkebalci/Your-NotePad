@@ -14,6 +14,13 @@ class ForgotPswScreen extends StatefulWidget {
 class _ForgotPswScreenState extends State<ForgotPswScreen> {
   final emailcontroller = TextEditingController();
   @override
+  void dispose() {
+    emailcontroller.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
