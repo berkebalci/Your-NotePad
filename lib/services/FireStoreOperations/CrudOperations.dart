@@ -13,16 +13,17 @@ class FireStoreCrudOperations {
     docNote.set(json);
   }
 
-  Stream<Note> readNotes(String currentUseremail) {
+  Stream<List<Note>> readNotes(String currentUseremail) {
     //Bu stream yapısından zaten asenkron olduğundan dolayı async* keywordunu kullanmamız gerekiyor.
-    return FirebaseFirestore.instance 
+    return FirebaseFirestore.instance
         .collection('users')
         .doc('$currentUseremail')
+        .collection('note1')
         .snapshots()
         .map((snapshot) {
-      return Note.fromJson(snapshot.data());
+      return snapshot.docs.map((docs) => Note.fromJson(docs.data())).toList();
     });
+
     //Dökümanların datalarını döndürüyor
   }
-  
 }

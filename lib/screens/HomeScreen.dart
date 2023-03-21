@@ -7,6 +7,7 @@ import 'package:time_tracker_app_firebase/screens/AddingNoteScreen.dart';
 import 'package:time_tracker_app_firebase/services/Authentication/authentication.dart';
 import 'package:time_tracker_app_firebase/services/FireStoreOperations/CrudOperations.dart';
 import 'package:time_tracker_app_firebase/services/FireStoreOperations/FireStoreOperations.dart';
+import 'package:time_tracker_app_firebase/services/models/Note.dart';
 import 'package:time_tracker_app_firebase/widgets/AuthenticationWidget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,16 +21,18 @@ class _HomeScreenState extends State<HomeScreen> {
   late User? user;
   late var isCollectionExists = false;
   var crudop = FireStoreCrudOperations();
+  late var lengthofquery = 0;
   @override
   void initState() {
     //currentUser bir getter metodu
     checkisCollectionExists();
+
     setState(() {});
     //Kullanicinin hiç notu yoksa bir yazı çıkacak varsa notlar gözükecek.
+
     super.initState();
   }
 
-  @override
   checkisCollectionExists() async {
     user = FirebaseAuth.instance.currentUser;
     var FireStoreobject = FireStoreOperations();
@@ -64,14 +67,15 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final notes = snapshot.data;
-              
+              print(notes);
+              print(notes.length);
               return ListView.separated(
-                //TODO: Buraya FireStore'dan read özelliği gelmesi lazım
+                //TODO: Çekilen veri sayisinin düzgün yazılması gerekiyor
                 shrinkWrap: true,
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 padding: EdgeInsets.all(15),
-                itemCount:4,          
+                itemCount: notes.length,
                 itemBuilder: (context, index) {
                   return Container(
                     decoration: BoxDecoration(
@@ -83,7 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("${notes.title} , ${notes.content}", style: TextStyle(fontSize: 30)),
+                          Text("${notes[index].title} , ${notes[index].content}",
+                              style: TextStyle(fontSize: 30)),
                         ],
                       ),
                       trailing: Icon(Icons.forward),
