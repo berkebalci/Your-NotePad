@@ -5,9 +5,12 @@ import 'package:time_tracker_app_firebase/services/models/Note.dart';
 
 class FireStoreCrudOperations {
   Future createNote(
-      String docname, String title, String content, String userUID) async {
-    final docNote =
-        FirebaseFirestore.instance.collection('users').doc('$docname');
+      String useremail, String title, String content, String userUID) async {
+    final docNote = FirebaseFirestore.instance
+        .collection('users')
+        .doc('$useremail')
+        .collection('note1')
+        .doc();
     final note = Note(title: title, content: content, userUID: userUID);
     final json = note.toJson();
     docNote.set(json);
