@@ -1,15 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:time_tracker_app_firebase/Utils/utils.dart';
+import 'package:time_tracker_app_firebase/services/FireStoreOperations/CrudOperations.dart';
 
 class AddingNoteScreen extends StatefulWidget {
-  final VoidCallback isCollectionExists; //isCollection exists döndürülecek
-  AddingNoteScreen({super.key,required this.isCollectionExists});
+  final bool iscollectionexists; //isCollection exists döndürülecek
+  final VoidCallback onAddedFirstNote;
+  AddingNoteScreen(
+      {super.key,
+      required this.iscollectionexists,
+      required this.onAddedFirstNote});
 
   @override
   State<AddingNoteScreen> createState() => _AddingNoteScreenState();
 }
 
 class _AddingNoteScreenState extends State<AddingNoteScreen> {
+  final User? user = FirebaseAuth.instance.currentUser;
   TextEditingController? titleController;
   TextEditingController? contentController;
 
@@ -22,8 +30,8 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
 
   @override
   void dispose() {
-    titleController!.clear();
-    contentController!.clear();
+    titleController!.dispose();
+    contentController!.dispose();
     super.dispose();
   }
 
@@ -36,22 +44,16 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
             children: [Text("Add a Note")]),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(14.0),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           TextField(
-            controller: titleController,
+            textAlign: TextAlign.center
+            ,controller: titleController,
             decoration: InputDecoration(
-                label: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Title ",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  ],
-                ),
+                
+                labelText: "Title",
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15))),
+                    borderRadius: BorderRadius.circular(10))),
           ),
           SizedBox(
             height: 60,
@@ -59,13 +61,7 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
           TextField(
             controller: contentController,
             decoration: InputDecoration(
-                label:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(
-                    "Content",
-                    style: TextStyle(fontSize: 25),
-                  )
-                ]),
+                labelText:"Your Note",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15))),
           ),
@@ -73,12 +69,21 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
             height: 40,
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              //TODO: Not ekleme kodunu buraya yaz
               if (contentController!.text != "" &&
                   titleController!.text != "") {
-                print("Note added");
+                var object = FireStoreCrudOperations();
 
-                //TODO: Not ekleme kodunu buraya yaz
+                await object
+                    .createNote(user!.email!, titleController!.text,
+                        contentController!.text, user!.uid)
+                    .catchError(() {
+                  Utils.showSnackBar("Something went wrong :(");
+                });
+                titleController!.clear();
+                contentController!.clear();
+                Utils.showSnackBar("Note has been added successfuly");
               } else {
                 Utils.showSnackBar("Please fill in all the fields ");
               }
