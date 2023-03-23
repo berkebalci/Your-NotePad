@@ -63,14 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       )),
       body: StreamBuilder<dynamic>(
-          stream: crudop.readNotes(user!.email!),
+          stream: crudop.readNotes(user!.uid),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final notes = snapshot.data;
               print(notes);
               print(notes.length);
               return ListView.separated(
-                //TODO: Çekilen veri sayisinin düzgün yazılması gerekiyor
                 shrinkWrap: true,
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
@@ -87,11 +86,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("${notes[index].title} , ${notes[index].content}",
-                              style: TextStyle(fontSize: 30)),
+                          Text("${notes[index].title}",
+                              style: TextStyle(fontSize: 25)),
                         ],
-                      ),
-                      trailing: Icon(Icons.forward),
+                      
+                    ),
+                      subtitle: Expanded(
+                        child: Text("${notes[index].content}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,),
+                      )
+                      
+                      ,trailing: Icon(Icons.forward),
                       onTap: () async {
                         //TODO: FireStore Read ve ayrıca bir container gerekiyor
                       },

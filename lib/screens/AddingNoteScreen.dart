@@ -76,8 +76,8 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
                 var object = FireStoreCrudOperations();
 
                 await object
-                    .createNote(user!.email!, titleController!.text,
-                        contentController!.text, user!.uid)
+                    .createNote(user!.uid, titleController!.text,
+                        contentController!.text,)
                     .catchError(() {
                   Utils.showSnackBar("Something went wrong :(");
                 });

@@ -1,11 +1,11 @@
 class Note {
   String title;
   String content;
-  String userUID;
-  Note({required this.title, required this.content, required this.userUID});
+  
+  Note({required this.title, required this.content});
 
   Map<String, dynamic> toJson() {
-    return {'title': title, 'content': content, 'userUID': userUID};
+    return {'title': title, 'content': content};
   }
 
   static Note fromJson(Map<String, dynamic>? json) {
@@ -13,7 +13,7 @@ class Note {
       return Note(
           title: json['title'],
           content: json['content'],
-          userUID: json['userUID']);
+          );
     }
     throw Exception("Json is null");
   }
