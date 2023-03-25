@@ -27,6 +27,11 @@ class FireStoreCrudOperations {
       return snapshot.docs.map((docs) => Note.fromJson(docs.data())).toList();
     });
 
+    
+
     //Dökümanların datalarını döndürüyor
+}
+  Future updateNotes() async{
+    
   }
 }

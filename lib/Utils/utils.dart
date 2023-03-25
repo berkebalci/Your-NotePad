@@ -56,6 +56,67 @@ class Utils {
     );
   }
 
+  static bottomSheet(
+      BuildContext context, String content, VoidCallback onClickedEditButton,
+      {Widget? widget}) {
+    return showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        isScrollControlled: true //Bu değeri true yaptığımızda bottom sheetin
+        //**yüksekliğini ayarlayacağız.
+        ,
+        context: context,
+        builder: ((context) {
+          return DraggableScrollableSheet(
+            //Böylece bottom sheet
+            expand: false,
+            initialChildSize: 0.4,
+            maxChildSize: 0.8,
+            minChildSize: 0.3,
+            builder: (context, scrollController) {
+              return Stack(
+                  alignment: Alignment.topCenter,
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned(
+                        top: -15,
+                        child: Container(
+                          width: 60,
+                          height: 7,
+                          decoration: BoxDecoration(color: Colors.white),
+                        )),
+                    SingleChildScrollView(
+                      controller: scrollController,
+                      child: Container(
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: IconButton(
+                                  onPressed: () {
+                                    
+                                  },
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors.blue,
+                                  )),
+                            ),
+                            Text(
+                              content,
+                              style: TextStyle(fontSize: 18),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]);
+            },
+          );
+        }));
+  }
+
   static defaultOnclickedSnackBarFun() {}
   static defaultOnclickedOk() {}
 }

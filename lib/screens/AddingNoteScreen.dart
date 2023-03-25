@@ -47,10 +47,9 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
         padding: const EdgeInsets.all(14.0),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           TextField(
-            textAlign: TextAlign.center
-            ,controller: titleController,
+            textAlign: TextAlign.center,
+            controller: titleController,
             decoration: InputDecoration(
-                
                 labelText: "Title",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10))),
@@ -61,7 +60,7 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
           TextField(
             controller: contentController,
             decoration: InputDecoration(
-                labelText:"Your Note",
+                labelText: "Your Note",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15))),
           ),
@@ -70,19 +69,22 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
           ),
           ElevatedButton(
             onPressed: () async {
-              //TODO: Not ekleme kodunu buraya yaz
               if (contentController!.text != "" &&
                   titleController!.text != "") {
                 var object = FireStoreCrudOperations();
 
                 await object
-                    .createNote(user!.uid, titleController!.text,
-                        contentController!.text,)
+                    .createNote(
+                  user!.uid,
+                  titleController!.text,
+                  contentController!.text,
+                )
                     .catchError(() {
                   Utils.showSnackBar("Something went wrong :(");
                 });
                 titleController!.clear();
                 contentController!.clear();
+                widget.onAddedFirstNote();
                 Utils.showSnackBar("Note has been added successfuly");
               } else {
                 Utils.showSnackBar("Please fill in all the fields ");
