@@ -13,5 +13,7 @@ class FireStoreOperations {
     var isCollectExists = await userRef.get().then((value) => value.size > 0);
     print(isCollectExists);
     return isCollectExists;
-  } //TODO: Burasının da düzenlenmesi gerek !!
+  }
+
+  //TODO: 
 }

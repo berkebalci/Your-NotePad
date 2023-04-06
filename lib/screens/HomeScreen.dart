@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     user = FirebaseAuth.instance.currentUser;
     var FireStoreobject = FireStoreOperations();
     bool response = await FireStoreobject.isThisUsersFirstNote(user!.uid);
+    print(response);
     bool isEditIconClicked = false;
     setState(() {
       isCollectionExists = response;
@@ -102,13 +103,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           trailing: Icon(Icons.forward),
-                          onTap: () async {
-                            //Notların üzerine basınca olacaklar
-
-                            //Utils.bottomSheet(context, notes[index].content);
-                            NoteEditingWidget(
-                                context: context,
-                                content: notes[index].content);
+                          onTap: () {
+                            //Basmada sıkıntı yok
+                            print("Notlarin üzerine basildi");
+                            Utils.bottomSheet(context, notes[index].content);
+                            setState(() {});
                           },
                         ),
                       );
