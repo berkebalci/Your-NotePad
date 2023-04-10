@@ -23,7 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   late User? user;
   late var isCollectionExists = false;
   var crudop = FireStoreCrudOperations();
-  late var lengthofquery = 0;
+
+  List<int> NoteObjects = [1,2,3];
+
   @override
   void initState() {
     //currentUser bir getter metodu
@@ -106,8 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             //Basmada sıkıntı yok
                             print("Notlarin üzerine basildi");
-                            Utils.bottomSheet(context, notes[index].content);
-                            setState(() {});
+                            Utils.bottomSheet(context, notes[index].title,
+                                notes[index].content);
                           },
                         ),
                       );

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:time_tracker_app_firebase/screens/EditingNote.dart';
 
 class Utils {
   static final messangerkey = GlobalKey<ScaffoldMessengerState>();
@@ -56,7 +57,12 @@ class Utils {
     );
   }
 
-  static bottomSheet(BuildContext context, String content) {
+  static bottomSheet(
+    BuildContext context,
+    String title
+    ,String content,
+    [VoidCallback onClickedEdit = defaultonClickedEdit]
+  ) {
     return showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -69,14 +75,12 @@ class Utils {
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              top: -15,
-              left: 0,
-              right: 0,
+              top: 15,
               child: Container(
                 width: 60,
                 height: 7,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.blueAccent,
                 ),
               ),
             ),
@@ -87,6 +91,7 @@ class Utils {
               minChildSize: 0.3,
               builder: (context, scrollController) {
                 return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   controller: scrollController,
                   child: Container(
                     padding: const EdgeInsets.all(15),
@@ -96,7 +101,16 @@ class Utils {
                         Align(
                           alignment: Alignment.topRight,
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              print("sj");
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => EditingNoteScreen(
+                                  title: title,
+                                  content: content, 
+                                  onClickedEdit: onClickedEdit,
+                                ),
+                              ));
+                            },
                             icon: const Icon(
                               Icons.edit,
                               color: Colors.blue,
@@ -113,7 +127,6 @@ class Utils {
                 );
               },
             ),
-            
           ],
         );
       }),
@@ -122,4 +135,5 @@ class Utils {
 
   static defaultOnclickedSnackBarFun() {}
   static defaultOnclickedOk() {}
+  static defaultonClickedEdit() {}
 }
