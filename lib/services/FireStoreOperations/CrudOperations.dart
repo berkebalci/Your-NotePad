@@ -14,10 +14,7 @@ class FireStoreCrudOperations {
         .doc('$userUID')
         .collection('note1')
         .doc();
-    final note = Note(
-      title: title,
-      content: content,
-    );
+    final note = Note(title: title, content: content, noteUID: docNote.id);
 
     final json = note.toJson();
     await docNote.set(json);
@@ -37,11 +34,13 @@ class FireStoreCrudOperations {
     //Dökümanların datalarını döndürüyor
   }
 
-  Future updateNotes(String userUID) async {
+  Future updateNotes(
+      String userUID, String noteUID, String title, String content) async {
     final docNote = FirebaseFirestore.instance
         .collection('users')
-        .doc('$userUID') //TODO: Buraya bakılacak
+        .doc('$userUID') 
         .collection('note1')
-        .doc();
+        .doc('$noteUID');
+    await docNote.update({'title': title, 'content': content});
   }
 }

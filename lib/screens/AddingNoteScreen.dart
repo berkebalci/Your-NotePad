@@ -58,6 +58,7 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
             height: 60,
           ),
           TextField(
+            maxLines:  null, //textfieldin asagi genislemesini sagliyor
             controller: contentController,
             decoration: InputDecoration(
                 labelText: "Your Note",
