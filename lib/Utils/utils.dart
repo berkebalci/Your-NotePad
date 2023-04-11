@@ -61,6 +61,7 @@ class Utils {
     BuildContext context,
     String title
     ,String content,
+    String noteUID,
     [VoidCallback onClickedEdit = defaultonClickedEdit]
   ) {
     return showModalBottomSheet(
@@ -106,7 +107,8 @@ class Utils {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => EditingNoteScreen(
                                   title: title,
-                                  content: content, 
+                                  content: content,
+                                  noteUID: noteUID,
                                   onClickedEdit: onClickedEdit,
                                 ),
                               ));

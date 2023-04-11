@@ -1,11 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:time_tracker_app_firebase/Utils/utils.dart';
+import 'package:time_tracker_app_firebase/services/FireStoreOperations/CrudOperations.dart';
 
 class EditingNoteScreen extends StatefulWidget {
   String title;
   String content;
+  String noteUID;
   VoidCallback onClickedEdit;
-  EditingNoteScreen({super.key, required this.title, required this.content,
-  required this.onClickedEdit});
+  EditingNoteScreen(
+      {super.key,
+      required this.title,
+      required this.content,
+      required this.noteUID,
+      required this.onClickedEdit});
 
   @override
   State<EditingNoteScreen> createState() => _EditingNoteScreenState();
@@ -14,10 +23,10 @@ class EditingNoteScreen extends StatefulWidget {
 class _EditingNoteScreenState extends State<EditingNoteScreen> {
   late TextEditingController titlecontroller;
   late TextEditingController contentcontroller;
-  late String previoustitletext; 
+  late String previoustitletext;
   late String previouscontenttext;
   var isConfirmButtonvisible = false;
-
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -84,8 +93,19 @@ class _EditingNoteScreenState extends State<EditingNoteScreen> {
           ElevatedButton(
               onPressed: isConfirmButtonvisible
                   ? () {
-                      print("$previoustitletext");
-                      print("$previouscontenttext");
+                      try {
+                        var object = FireStoreCrudOperations();
+                        object.updateNotes(user!.uid, widget.noteUID,
+                            titlecontroller.text, contentcontroller.text);
+                        Utils.showSnackBar(
+                            "Your Note has been edited successfuly");
+                        setState(() {
+                          previoustitletext = titlecontroller.text;
+                          previouscontenttext = contentcontroller.text;
+                        });
+                      } on FirebaseException catch (e) {
+                        Utils.showSnackBar("Something went wrong :(");
+                      }
                     }
                   : null,
               child: Text("Confirm Changes"))

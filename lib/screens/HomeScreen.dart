@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             //Basmada sıkıntı yok
                             print("Notlarin üzerine basildi");
                             Utils.bottomSheet(context, notes[index].title,
-                                notes[index].content);
+                                notes[index].content,notes[index].noteUID);
                           },
                         ),
                       );
