@@ -17,7 +17,6 @@ class LoginScreen extends StatefulWidget {
   final VoidCallback
       OnclickedSignUp; //Hem checklogin hem de checkemailverified callbackleri gelcek
   const LoginScreen({super.key, required this.OnclickedSignUp});
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -25,6 +24,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwController = TextEditingController();
+  bool isPswvisible = false;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -59,8 +60,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 30,
                 ),
                 TextField(
+                  obscureText: !isPswvisible,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: isPswvisible
+                            ? Icon(Icons.visibility_off)
+                            : Icon(Icons.visibility),
+                        onPressed: () {
+                          setState(() {
+                            isPswvisible = !isPswvisible;
+                          });
+                          
+                        },
+                      ),
                       labelText: "Password",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),

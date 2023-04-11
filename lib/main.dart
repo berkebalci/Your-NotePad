@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      scaffoldMessengerKey: Utils.messangerkey
-      ,title: 'Flutter Demo',
+      scaffoldMessengerKey: Utils.messangerkey,
+      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -66,13 +66,16 @@ class MyHomePage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
+              print("Waiting");
               return CircularProgressIndicator();
             } else if (snapshot.hasData) {
+              print("Snaphshotin verisi var");
               print(snapshot.data);
               return EmailVerWidget();
             } else if (snapshot.hasError) {
+              print("snaphshotin hatasi var");
               return Center(
-                child: Text("Something went wrong"),
+                child: Text("Something went wrong!!!!"),
               );
             } else {
               print("Auth class'i döndürülecek");

@@ -5,19 +5,29 @@ import 'package:time_tracker_app_firebase/services/models/Note.dart';
 
 class FireStoreCrudOperations {
   Future createNote(
-      String docname, String title, String content, String userUID) async {
-    final docNote =
-        FirebaseFirestore.instance.collection('users').doc('$docname');
-    final note = Note(title: title, content: content, userUID: userUID);
+    String userUID,
+    String title,
+    String content,
+  ) async {
+    final docNote = FirebaseFirestore.instance
+        .collection('users')
+        .doc('$userUID')
+        .collection('note1')
+        .doc();
+    final note = Note(
+      title: title,
+      content: content,
+    );
+
     final json = note.toJson();
-    docNote.set(json);
+    await docNote.set(json);
   }
 
-  Stream<List<Note>> readNotes(String currentUseremail) {
+  Stream<List<Note>> readNotes(String userUID) {
     //Bu stream yapısından zaten asenkron olduğundan dolayı async* keywordunu kullanmamız gerekiyor.
     return FirebaseFirestore.instance
         .collection('users')
-        .doc('$currentUseremail')
+        .doc('$userUID')
         .collection('note1')
         .snapshots()
         .map((snapshot) {
@@ -25,5 +35,13 @@ class FireStoreCrudOperations {
     });
 
     //Dökümanların datalarını döndürüyor
+  }
+
+  Future updateNotes(String userUID) async {
+    final docNote = FirebaseFirestore.instance
+        .collection('users')
+        .doc('$userUID') //TODO: Buraya bakılacak
+        .collection('note1')
+        .doc();
   }
 }
