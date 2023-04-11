@@ -1,12 +1,11 @@
 class Note {
   String title;
   String content;
-  String noteUID;
-
-  Note({required this.title, required this.content,required this.noteUID});
+  
+  Note({required this.title, required this.content,});
 
   Map<String, dynamic> toJson() {
-    return {'title': title, 'content': content,'noteUID':noteUID};
+    return {'title': title, 'content': content,};
   }
 
   static Note fromJson(Map<String, dynamic>? json) {
@@ -14,7 +13,7 @@ class Note {
       return Note(
         title: json['title'],
         content: json['content'], 
-        noteUID: json['noteUID'] //TODO: FireStore'a ve uygulamanın geri kalanına bu değişkeni ekle 
+         //TODO: FireStore'a ve uygulamanın geri kalanına bu değişkeni ekle 
       );
     }
     throw Exception("Json is null");

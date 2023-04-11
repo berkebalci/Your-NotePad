@@ -14,7 +14,7 @@ class EditingNoteScreen extends StatefulWidget {
 class _EditingNoteScreenState extends State<EditingNoteScreen> {
   late TextEditingController titlecontroller;
   late TextEditingController contentcontroller;
-  late String previoustitletext; //TODO: Bu değişkenleri doldurmam gerekiyor
+  late String previoustitletext; 
   late String previouscontenttext;
   var isConfirmButtonvisible = false;
 

@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late var isCollectionExists = false;
   var crudop = FireStoreCrudOperations();
 
-  List<int> NoteObjects = [1,2,3];
+  List<int> NoteObjects = [1, 2, 3];
 
   @override
   void initState() {
@@ -83,6 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.all(15),
                     itemCount: notes.length,
                     itemBuilder: (context, index) {
+                      print("itembuilderin içindeyiz");
+                      print(notes[index]);
+
                       return Container(
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.black54),
@@ -152,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void checkCollectionexists() {
     setState(() {
-      isCollectionExists = !isCollectionExists;
+      isCollectionExists = true;
     });
   }
 }

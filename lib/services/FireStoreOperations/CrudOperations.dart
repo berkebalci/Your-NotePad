@@ -5,7 +5,10 @@ import 'package:time_tracker_app_firebase/services/models/Note.dart';
 
 class FireStoreCrudOperations {
   Future createNote(
-    String userUID,String title,String content,) async {
+    String userUID,
+    String title,
+    String content,
+  ) async {
     final docNote = FirebaseFirestore.instance
         .collection('users')
         .doc('$userUID')
@@ -14,9 +17,8 @@ class FireStoreCrudOperations {
     final note = Note(
       title: title,
       content: content,
-      noteUID: docNote.id //Döküman için random üretilmiş Stringtir.
     );
-    
+
     final json = note.toJson();
     await docNote.set(json);
   }
