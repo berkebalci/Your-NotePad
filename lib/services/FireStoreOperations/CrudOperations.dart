@@ -35,12 +35,21 @@ class FireStoreCrudOperations {
   }
 
   Future updateNotes(
-      String userUID, String noteUID, String title, String content) async {
+      User? currentuser, String noteUID, String title, String content) async {
     final docNote = FirebaseFirestore.instance
         .collection('users')
-        .doc('$userUID') 
+        .doc('${currentuser!.uid}')
         .collection('note1')
         .doc('$noteUID');
     await docNote.update({'title': title, 'content': content});
+  }
+
+  Future deleteNotes(String userUID, String noteUID) async {
+    final docNote = FirebaseFirestore.instance
+        .collection('users')
+        .doc('$userUID')
+        .collection('note1')
+        .doc('$noteUID');
+    await docNote.delete();
   }
 }
