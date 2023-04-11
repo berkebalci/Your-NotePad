@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             //Basmada sıkıntı yok
                             print("Notlarin üzerine basildi");
-                            Utils.bottomSheet(context, notes[index].title,
+                            Utils.bottomSheet(context,user,notes[index].title,
                                 notes[index].content,notes[index].noteUID);
                           },
                         ),

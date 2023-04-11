@@ -5,12 +5,14 @@ import 'package:time_tracker_app_firebase/Utils/utils.dart';
 import 'package:time_tracker_app_firebase/services/FireStoreOperations/CrudOperations.dart';
 
 class EditingNoteScreen extends StatefulWidget {
+  User? currentuser;
   String title;
   String content;
   String noteUID;
   VoidCallback onClickedEdit;
   EditingNoteScreen(
       {super.key,
+      required this.currentuser,
       required this.title,
       required this.content,
       required this.noteUID,
@@ -95,7 +97,7 @@ class _EditingNoteScreenState extends State<EditingNoteScreen> {
                   ? () {
                       try {
                         var object = FireStoreCrudOperations();
-                        object.updateNotes(user!.uid, widget.noteUID,
+                        object.updateNotes(widget.currentuser, widget.noteUID,
                             titlecontroller.text, contentcontroller.text);
                         Utils.showSnackBar(
                             "Your Note has been edited successfuly");
