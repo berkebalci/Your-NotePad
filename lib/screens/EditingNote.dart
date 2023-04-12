@@ -87,7 +87,8 @@ class _EditingNoteScreenState extends State<EditingNoteScreen> {
           ),
           Expanded(
             child: TextField(
-                onChanged: onChanged,
+                maxLines: null
+                ,onChanged: onChanged,
                 controller: contentcontroller,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
