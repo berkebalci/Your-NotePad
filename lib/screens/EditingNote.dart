@@ -85,13 +85,15 @@ class _EditingNoteScreenState extends State<EditingNoteScreen> {
           SizedBox(
             height: 30,
           ),
-          TextField(
-              onChanged: onChanged,
-              controller: contentcontroller,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  hintText: "Content")),
+          Expanded(
+            child: TextField(
+                onChanged: onChanged,
+                controller: contentcontroller,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    hintText: "Content")),
+          ),
           ElevatedButton(
               onPressed: isConfirmButtonvisible
                   ? () {
