@@ -102,7 +102,8 @@ class Utils {
                   child: Container(
                     padding: const EdgeInsets.all(15),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start
+                      ,mainAxisSize: MainAxisSize.min,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween
