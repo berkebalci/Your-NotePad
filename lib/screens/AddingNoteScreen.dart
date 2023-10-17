@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,6 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +49,8 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
         padding: const EdgeInsets.all(14.0),
         child: Center(
           child: SingleChildScrollView(
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               TextField(
                 textAlign: TextAlign.center,
                 controller: titleController,
@@ -61,7 +63,7 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
                 height: 60,
               ),
               TextField(
-                maxLines:  null, //textfieldin asagi genislemesini sagliyor
+                maxLines: null, //textfieldin asagi genislemesini sagliyor
                 controller: contentController,
                 decoration: InputDecoration(
                     labelText: "Your Note",
@@ -76,7 +78,7 @@ class _AddingNoteScreenState extends State<AddingNoteScreen> {
                   if (contentController!.text != "" &&
                       titleController!.text != "") {
                     var object = FireStoreCrudOperations();
-          
+
                     await object
                         .createNote(
                       user!.uid,

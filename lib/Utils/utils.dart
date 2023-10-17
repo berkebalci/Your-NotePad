@@ -90,68 +90,7 @@ class Utils {
                 ),
               ),
             ),
-            DraggableScrollableSheet(
-              expand: false,
-              initialChildSize: 0.4,
-              maxChildSize: 0.8,
-              minChildSize: 0.3,
-              builder: (context, scrollController) {
-                return SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  controller: scrollController,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start
-                      ,mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween
-                          ,children: [
-                             IconButton(
-                              icon: Icon(Icons.delete,color: Colors.blue,),
-                              onPressed: () {
-                                Utils.showAlertDialog(
-                                    context, "Do you want to delete your note?",
-                                    onClickedOk: () {
-                                  var object = FireStoreCrudOperations();
-                                  object.deleteNotes(currentUser!.uid, noteUID);
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
-                                });
-                              },
-                            )
-                            ,IconButton(
-                              onPressed: () {
-                                print("sj");
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => EditingNoteScreen(
-                                    currentuser: currentUser,
-                                    title: title,
-                                    content: content,
-                                    noteUID: noteUID,
-                                    onClickedEdit: onClickedEdit,
-                                  ),
-                                ));
-                              },
-                              icon: const Icon(
-                                Icons.edit,
-                                color: Colors.blue,
-                              ),
-                            ),
-                           
-                          ],
-                        ),
-                        Text(
-                          content,
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
+            
           ],
         );
       }),

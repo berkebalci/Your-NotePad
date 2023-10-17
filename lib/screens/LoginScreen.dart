@@ -71,7 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() {
                             isPswvisible = !isPswvisible;
                           });
-                          
                         },
                       ),
                       labelText: "Password",

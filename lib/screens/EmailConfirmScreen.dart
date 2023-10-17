@@ -36,7 +36,8 @@ class _EmailConfirmScreenState extends State<EmailConfirmScreen> {
               var usrpsw = userpasw;
               var object = Authentication(email: email!, password: usrpsw);
               object.deleteuser();
-              Utils.showSnackBar("The informations you've given has been deleted");
+              Utils.showSnackBar(
+                  "The informations you've given has been deleted");
               Navigator.of(context).pop();
             },
           );
@@ -68,7 +69,6 @@ class _EmailConfirmScreenState extends State<EmailConfirmScreen> {
                 setState(() {
                   widget.onEmailVerified();
                 });
-                
               } else {
                 Utils.showSnackBar(
                   "Email is not confirmed yet",
